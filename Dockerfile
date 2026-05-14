@@ -1,13 +1,17 @@
 FROM continuumio/miniconda3
 
-WORKDIR /app
+WORKDIR /workspace
 
 COPY environment.yml .
 
 RUN conda env create -f environment.yml
 
-SHELL ["conda", "run", "-n", "testenv", "/bin/bash", "-c"]
+SHELL ["conda", "run", "-n", "mlenv", "/bin/bash", "-c"]
 
-COPY app.py .
+COPY app/ ./app/
+COPY data/ ./data/
+COPY scripts/ ./scripts/
 
-CMD ["conda", "run", "--no-capture-output", "-n", "testenv", "python", "app.py"]
+RUN chmod +x scripts/run.sh
+
+CMD ["./scripts/run.sh"]
