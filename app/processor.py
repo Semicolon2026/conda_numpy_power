@@ -1,10 +1,16 @@
 import numpy as np
-import pandas as pd
 
-def process_data():
-    arr = np.array([10, 20, 30])
+def handle_missing(df, fill_value=0):
+    return df.fillna(fill_value)
 
-    df = pd.DataFrame(arr, columns=["values"])
+def add_features(df):
+    numeric_cols = df.select_dtypes(include=[np.number])
 
-    print("Numpy version:", np.__version__)
-    print(df)
+    if numeric_cols.empty:
+        df["dummy_feature"] = 1
+        return df
+
+    df["row_sum"] = numeric_cols.sum(axis=1)
+    df["noise"] = np.random.randn(len(df))
+
+    return df
