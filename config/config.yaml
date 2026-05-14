@@ -1,0 +1,9 @@
+app:
+  name: ml-conda-numpy-power
+  version: 1.0
+
+data:
+  input_path: data/sample.csv
+
+processing:
+  fillna_value: 0
